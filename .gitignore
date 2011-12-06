@@ -1,0 +1,11 @@
+*.pyc
+.*.swp
+*.egg-info
+localsettings.py
+/.project
+/.pydevproject
+/.settings
+/env
+/demo/sqlite.db
+/demo/sqlite.db
+/demo/media/session_attachments

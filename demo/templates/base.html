@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <script src="{{ MEDIA_URL }}js/jquery-1.7.min.js"></script>
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/reset.css" />
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
