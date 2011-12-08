@@ -21,7 +21,7 @@ class Attachment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     session_id = models.CharField(max_length=40)
     bundle = models.CharField(max_length=256)
-    file = models.FileField(upload_to=file_upload_to)
+    file = models.FileField(upload_to=file_upload_to, max_length=1024)
     filename = models.CharField(max_length=100, editable=False)
 
     def save(self, *args, **kwargs):
