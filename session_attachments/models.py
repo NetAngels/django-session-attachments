@@ -29,12 +29,19 @@ class Attachment(models.Model):
         self.filename = file_basename
         super(Attachment, self).save(*args, **kwargs)
 
+
+    @property
+    def created_str(self):
+        return self.created.strftime('%Y-%m-%d %H:%M')
+
+    @property
+    def mimetype(self):
+        return mimetypes.guess_type(self.file.path)[0] or 'octet/stream'
+
     def __json__(self):
-        created_str = self.created.strftime('%Y-%m-%d %H:%M')
-        mimetype = mimetypes.guess_type(self.file.path)[0] or 'octet/stream'
         return {
-            'created': created_str,
+            'created': self.created_str,
             'name': self.filename,
             'size': self.file.size,
-            'mimetype': mimetype
+            'mimetype': self.mimetype
         }
