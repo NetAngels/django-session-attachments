@@ -15,7 +15,7 @@ def read(fname):
 
 setup(
     name='django-session-attachments',
-    version='0.1',
+    version='0.2',
     author='NetAngels',
     author_email='info@netangels.ru',
     packages=['session_attachments'],

@@ -33,7 +33,7 @@ def bundle_attachments(request, bundle_id):
                     )
                 data.append(attach.__json__())
     json_result = u'%s\r\n' % json.dumps(data)
-    return HttpResponse(json_result, 'application/json; charset=utf-8')
+    return HttpResponse(json_result, 'text/plain; charset=utf-8')
 
 
 @require_GET
@@ -53,7 +53,7 @@ def delete_bundle_attachments(request, bundle_id):
     session_id = request.session.session_key
     result = delete_attachments(session_id=session_id, bundle_id=bundle_id)
     json_result = u'%s\r\n' % json.dumps(result)
-    return HttpResponse(json_result, 'application/json; charset=utf-8')
+    return HttpResponse(json_result, 'text/plain; charset=utf-8')
 
 
 @require_POST
@@ -61,4 +61,4 @@ def delete_filename_attachment(request, bundle_id, file_name):
     session_id = request.session.session_key
     result = delete_attachment(session_id=session_id, bundle_id=bundle_id, file_name=file_name)
     json_result = u'%s\r\n' % json.dumps(result)
-    return HttpResponse(json_result, 'application/json; charset=utf-8')
+    return HttpResponse(json_result, 'text/plain; charset=utf-8')

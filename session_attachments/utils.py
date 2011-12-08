@@ -3,8 +3,14 @@ import os
 from .models import Attachment
 
 
-def get_attachments(session_id, bundle_id):
-    return Attachment.objects.filter(session_id=session_id, bundle=bundle_id)
+def get_attachments(session_id, bundle_id, json=False):
+    attachment_list = Attachment.objects.filter(session_id=session_id, bundle=bundle_id)
+    if json:
+        attachments = []
+        for att in attachment_list:
+            attachments.append(att.__json__())
+        attachment_list = attachments
+    return attachment_list
 
 
 def delete_attachments(session_id, bundle_id):
