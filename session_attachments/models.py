@@ -15,7 +15,8 @@ class Attachment(models.Model):
         md5.update(instance.session_id)
         md5.update(settings.SECRET_KEY)
         digest = md5.hexdigest()
-        filename_digest = hashlib.md5(filename).hexdigest()
+        encoded_filename = filename.encode('utf-8', 'ignore')
+        filename_digest = hashlib.md5(encoded_filename).hexdigest()
         return 'session_attachments/%s/%s/%s' % (digest, filename_digest, filename)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -28,7 +29,6 @@ class Attachment(models.Model):
         file_basename = os.path.basename(self.file.name)
         self.filename = file_basename
         super(Attachment, self).save(*args, **kwargs)
-
 
     @property
     def created_str(self):
