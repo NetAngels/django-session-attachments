@@ -14,9 +14,9 @@ if settings.DEBUG:
             {'document_root': settings.ADMIN_MEDIA_ROOT}),
     )
     urlpatterns += patterns('',
-                            url(r'^', include('session_attachments.urls')),
+                            url(r'^attachments/', include('session_attachments.urls')),
                             )
 else:
     urlpatterns = patterns('',
-                            url(r'^', include('session_attachments.urls')),
+                            url(r'^attachments/', include('session_attachments.urls')),
                             )
