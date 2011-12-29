@@ -99,6 +99,7 @@ Download the file from the bundle
 ``````````````````````````````````````
 
 ::
+
     $ curl --cookie session.txt --cookie-jar session.txt -X GET http://localhost:8000/attachments/foo/spam.txt/
     spam
 
