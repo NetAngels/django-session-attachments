@@ -5,8 +5,10 @@ from django.utils import simplejson as json
 from django.views.decorators.http import require_POST, require_GET
 from .models import Attachment
 from .utils import get_attachments, get_attachment, delete_attachments, delete_attachment, delete_and_clean
+from .decorators import enforce_session
 
 
+@enforce_session
 def bundle_attachments(request, bundle_id):
     """ Return the list of attachments in the bundle on GET (list of JSON
     objects), insert new attachments in the bundle on POST """
@@ -37,6 +39,7 @@ def bundle_attachments(request, bundle_id):
 
 
 @require_GET
+@enforce_session
 def get_filename_attachment(request, bundle_id, file_name):
     session_id = request.session.session_key
     attach = get_attachment(session_id=session_id, bundle_id=bundle_id, file_name=file_name)
@@ -49,6 +52,7 @@ def get_filename_attachment(request, bundle_id, file_name):
 
 
 @require_POST
+@enforce_session
 def delete_bundle_attachments(request, bundle_id):
     session_id = request.session.session_key
     result = delete_attachments(session_id=session_id, bundle_id=bundle_id)
@@ -57,6 +61,7 @@ def delete_bundle_attachments(request, bundle_id):
 
 
 @require_POST
+@enforce_session
 def delete_filename_attachment(request, bundle_id, file_name):
     session_id = request.session.session_key
     result = delete_attachment(session_id=session_id, bundle_id=bundle_id, file_name=file_name)
