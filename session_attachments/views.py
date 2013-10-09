@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import mimetypes
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound
 from django.utils import simplejson as json
 from django.views.decorators.http import require_POST, require_GET
 from .models import Attachment
@@ -25,7 +25,7 @@ def bundle_attachments(request, bundle_id):
                 # check max size
                 file_size = request.FILES[upload_file].size/(1024*1024)
                 if file_size > MAX_ATTACHMENT_SIZE:
-                    raise Http404
+                    return HttpResponse(status=413)
 
                 try:
                     attach = Attachment.objects.get(filename=file_name, bundle=bundle_id)
