@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import mimetypes
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.utils import simplejson as json
 from django.views.decorators.http import require_POST, require_GET
 from .models import Attachment
 from .utils import get_attachments, get_attachment, delete_attachments, delete_attachment, delete_and_clean
 from .decorators import enforce_session
-
+from .config import MAX_ATTACHMENT_SIZE
 
 @enforce_session
 def bundle_attachments(request, bundle_id):
@@ -22,6 +22,11 @@ def bundle_attachments(request, bundle_id):
     elif request.method == 'POST':
         if bundle_id:
             for upload_file, file_name in request.FILES.iteritems():
+                # check max size
+                file_size = request.FILES[upload_file].size/(1024*1024)
+                if file_size > MAX_ATTACHMENT_SIZE:
+                    raise Http404
+
                 try:
                     attach = Attachment.objects.get(filename=file_name, bundle=bundle_id)
                 except Attachment.DoesNotExist:
