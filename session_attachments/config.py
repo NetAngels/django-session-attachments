@@ -1,7 +1,5 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
 
-DEFAULT_SIZE = 50 # mb
+SESSION_ATTACHMENTS_MAX_FILE_SIZE = getattr(settings, "SESSION_ATTACHMENTS_MAX_FILE_SIZE", 50)
 
-MAX_ATTACHMENT_SIZE = getattr(settings, "MAX_ATTACHMENT_SIZE", None)
-if not MAX_ATTACHMENT_SIZE:
-	MAX_ATTACHMENT_SIZE = DEFAULT_SIZE

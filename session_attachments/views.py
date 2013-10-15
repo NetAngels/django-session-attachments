@@ -6,7 +6,8 @@ from django.views.decorators.http import require_POST, require_GET
 from .models import Attachment
 from .utils import get_attachments, get_attachment, delete_attachments, delete_attachment, delete_and_clean
 from .decorators import enforce_session
-from .config import MAX_ATTACHMENT_SIZE
+from .config import SESSION_ATTACHMENTS_MAX_FILE_SIZE
+
 
 @enforce_session
 def bundle_attachments(request, bundle_id):
@@ -23,8 +24,8 @@ def bundle_attachments(request, bundle_id):
         if bundle_id:
             for upload_file, file_name in request.FILES.iteritems():
                 # check max size
-                file_size = request.FILES[upload_file].size/(1024*1024)
-                if file_size > MAX_ATTACHMENT_SIZE:
+                file_size = request.FILES[upload_file].size / (1024 * 1024)
+                if file_size > SESSION_ATTACHMENTS_MAX_FILE_SIZE:
                     return HttpResponse(status=413)
 
                 try:
