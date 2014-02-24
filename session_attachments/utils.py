@@ -41,12 +41,12 @@ def delete_and_clean(attach=None):
     if attach:
         os.unlink(attach.file.path)
         first_parent, second_parent = _get_parents(attach)
-        os.rmdir(first_parent)  # it must not happen
+        attach.delete()
         try:
+            os.rmdir(first_parent)  # it must not happen
             os.rmdir(second_parent)  # probably, there are other attachments in the same bundle
         except OSError:
             pass
-        attach.delete()
         result.append(True)
     else:
         result.append(False)
