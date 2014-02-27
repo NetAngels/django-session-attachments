@@ -38,7 +38,7 @@ class Attachment(models.Model):
     def mimetype(self):
         return mimetypes.guess_type(self.file.path)[0] or 'octet/stream'
 
-    def __json__(self):
+    def __json__(self, *args, **kwargs):
         return {
             'created': self.created_str,
             'name': self.filename,
