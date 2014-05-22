@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('session_attachments.views',
     url(r'^(?P<bundle_id>[^/]+)/$', 'bundle_attachments', name='bundle-attachments'),
