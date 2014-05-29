@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import json
 import mimetypes
+
 from django.http import HttpResponse, HttpResponseNotFound
-from django.utils import simplejson as json
 from django.views.decorators.http import require_POST, require_GET
 from .models import Attachment
 from .utils import get_attachments, get_attachment, delete_attachments, delete_attachment, delete_and_clean
