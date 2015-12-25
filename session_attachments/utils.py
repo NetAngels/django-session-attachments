@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import errno
 import os
-from .models import Attachment
+import time
 
+from .config import NFS_WAIT_TIME
+from .models import Attachment
 
 def get_attachments(session_id, bundle_id, json=False):
     attachment_list = Attachment.objects.filter(session_id=session_id, bundle=bundle_id)
@@ -41,7 +44,14 @@ def delete_and_clean(attach=None):
     if attach:
         os.unlink(attach.file.path)
         first_parent, second_parent = _get_parents(attach)
-        os.rmdir(first_parent)  # it must not happen
+        try:
+            os.rmdir(first_parent)  # it must not happen
+        except OSError as ex:
+            if ex.errno == errno.ENOTEMPTY:
+                time.sleep(NFS_WAIT_TIME)
+                os.rmdir(first_parent)
+            else:
+                raise
         try:
             os.rmdir(second_parent)  # probably, there are other attachments in the same bundle
         except OSError:
