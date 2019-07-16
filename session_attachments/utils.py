@@ -49,7 +49,10 @@ def delete_and_clean(attach=None):
         except OSError as ex:
             if ex.errno == errno.ENOTEMPTY:
                 time.sleep(NFS_WAIT_TIME)
-                os.rmdir(first_parent)
+                try:
+                    os.rmdir(first_parent)
+                except OSError:
+                    pass
             else:
                 raise
         try:
